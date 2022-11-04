@@ -19,8 +19,10 @@ public partial class MainPage : ContentPage
 {
     TicTacToeGame ticTacToe; // model class
     Button[,] grid;          // stores the buttons
-
-
+    int ScoreX;
+    int ScoreO;
+  
+    
     /// <summary>
     /// initializes the component
     /// </summary>
@@ -28,6 +30,8 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
         ticTacToe = new TicTacToeGame();
+        ScoreX = ticTacToe.XScore;
+        ScoreO = ticTacToe.OScore;
         grid = new Button[TicTacToeGame.GRID_SIZE, TicTacToeGame.GRID_SIZE] { { Tile00, Tile01, Tile02 }, { Tile10, Tile11, Tile12 }, { Tile20, Tile21, Tile22 } };
     }
 
@@ -96,10 +100,25 @@ public partial class MainPage : ContentPage
     /// </summary>
     private void CelebrateVictory(Player victor)
     {
-        //MessageBox.Show(Application.Current.MainWindow, String.Format("Congratulations, {0}, you're the big winner today", victor.ToString()));
-        XScoreLBL.Text = String.Format("X's Score: {0}", ticTacToe.XScore);
-        OScoreLBL.Text = String.Format("O's Score: {0}", ticTacToe.OScore);
+     
+       
 
+
+        //MessageBox.Show(Application.Current.MainWindow, String.Format("Congratulations, {0}, you're the big winner today", victor.ToString()));
+         DisplayAlert("Congratulations", victor.ToString() + " you're the big winner today", "OK");
+
+        if (victor.ToString().Equals("X"))
+        {
+            ScoreX++;
+
+        }
+        if (victor.ToString().Equals("O"))
+        {
+            ScoreO++;
+        }
+
+        XScoreLBL.Text = String.Format("X's Score: {0}", ScoreX);
+        OScoreLBL.Text = String.Format("O's Score: {0}", ScoreO);
         ResetGame();
     }
 
@@ -108,12 +127,14 @@ public partial class MainPage : ContentPage
     /// </summary>
     private void ResetGame()
     {
-        for(int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++)
+        for(int i = 0; i < TicTacToeGame.GRID_SIZE; i++){
+            for (int j = 0; j < TicTacToeGame.GRID_SIZE; j++)
             {
                 grid[i, j].Text = "";
             }
         }
+        ticTacToe.ResetGame();
+
 
     }
 

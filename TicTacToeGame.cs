@@ -54,6 +54,7 @@ internal class TicTacToeGame
         {
             return scores[(int)Player.X];
         }
+
     }
 
     /// <summary>
